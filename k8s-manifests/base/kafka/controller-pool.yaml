@@ -11,5 +11,5 @@ spec:
   storage:
     type: persistent-claim
     size: 1Gi
-    class: ocs-storagecluster-ceph-rbd
+    class: standard
     deleteClaim: false
