@@ -10,6 +10,6 @@ spec:
     - controller
   storage:
     type: persistent-claim
-    size: 10Gi
+    size: 1Gi
     class: ocs-storagecluster-ceph-rbd
     deleteClaim: false
