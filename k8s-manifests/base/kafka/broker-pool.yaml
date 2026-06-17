@@ -1,9 +1,25 @@
+# apiVersion: kafka.strimzi.io/v1
+# kind: KafkaNodePool
+# metadata:
+#   name: superapp-broker-knp
+#   labels:
+#     strimzi.io/cluster: superapp-cluster
+# spec:
+#   replicas: 3
+#   roles:
+#     - broker
+#   storage:
+#     type: persistent-claim
+#     size: 100Gi
+#     class: ocs-storagecluster-ceph-rbd
+#     deleteClaim: false
+
 apiVersion: kafka.strimzi.io/v1
 kind: KafkaNodePool
 metadata:
-  name: superapp-broker-knp
+  name: superapp-broker-knp-dev
   labels:
-    strimzi.io/cluster: superapp-cluster
+    strimzi.io/cluster: superapp-cluster-dev
 spec:
   replicas: 3
   roles:
