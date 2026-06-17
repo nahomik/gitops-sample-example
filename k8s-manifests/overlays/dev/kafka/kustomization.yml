@@ -5,7 +5,7 @@ namespace: kafka
 resources:
   - ../../../base/kafka
 
-nameSuffix: -dev
+# nameSuffix: -dev
 
 # Example prod override (optional)
 # patches:
