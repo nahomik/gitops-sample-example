@@ -13,7 +13,7 @@ spec:
     path: argocd/apps/environments/dev
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: sample-dev
   syncPolicy:
     automated:
       prune: true
