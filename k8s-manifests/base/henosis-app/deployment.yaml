@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: henosis-app
+  namespace: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: henosis-app
+  template:
+    metadata:
+      labels:
+        app: henosis-app
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "henosis-role"
+        vault.hashicorp.com/agent-inject-secret-app_name: "kv/data/henosis-app"
+        vault.hashicorp.com/agent-inject-template-app_name: |
+          {{- with secret "kv/data/henosis-app" -}}
+          {{ .Data.data.app_name }}
+          {{- end }}
+        vault.hashicorp.com/agent-inject-secret-app_environment: "kv/data/henosis-app"
+        vault.hashicorp.com/agent-inject-template-app_environment: |
+          {{- with secret "kv/data/henosis-app" -}}
+          {{ .Data.data.app_environment }}
+          {{- end }}
+        vault.hashicorp.com/agent-inject-secret-app_version: "kv/data/henosis-app"
+        vault.hashicorp.com/agent-inject-template-app_version: |
+          {{- with secret "kv/data/henosis-app" -}}
+          {{ .Data.data.app_version }}
+          {{- end }}
+        vault.hashicorp.com/agent-inject-secret-message_prefix: "kv/data/henosis-app"
+        vault.hashicorp.com/agent-inject-template-message_prefix: |
+          {{- with secret "kv/data/henosis-app" -}}
+          {{ .Data.data.message_prefix }}
+          {{- end }}
+    spec:
+      serviceAccountName: henosis-app-sa
+      containers:
+        - name: henosis-app
+          image: ghcr.io/nahomik/henosis-app:latest
+          imagePullPolicy: Always
