@@ -39,5 +39,5 @@ spec:
       serviceAccountName: henosis-app-sa
       containers:
         - name: henosis-app
-          image: ghcr.io/nahomik/henosis-app:latest
+          image: dnahom/henosis-app:latest
           imagePullPolicy: Always
