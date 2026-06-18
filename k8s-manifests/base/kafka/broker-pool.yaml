@@ -5,7 +5,7 @@ metadata:
   labels:
     strimzi.io/cluster: superapp-cluster
 spec:
-  replicas: 3
+  replicas: 1
   roles:
     - broker
   storage:
