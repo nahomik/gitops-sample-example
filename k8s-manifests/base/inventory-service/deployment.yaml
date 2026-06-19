@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service
+  namespace: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-service
+  template:
+    metadata:
+      labels:
+        app: inventory-service
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "inventory-service-role"
+        vault.hashicorp.com/agent-inject-secret-app_name: "kv/data/inventory-service"
+        vault.hashicorp.com/agent-inject-template-app_name: |
+          {{- with secret "kv/data/inventory-service" -}}{{ .Data.data.app_name }}{{- end }}
+        vault.hashicorp.com/agent-inject-secret-kafka_broker: "kv/data/inventory-service"
+        vault.hashicorp.com/agent-inject-template-kafka_broker: |
+          {{- with secret "kv/data/inventory-service" -}}{{ .Data.data.kafka_broker }}{{- end }}
+        vault.hashicorp.com/agent-inject-secret-redis_url: "kv/data/inventory-service"
+        vault.hashicorp.com/agent-inject-template-redis_url: |
+          {{- with secret "kv/data/inventory-service" -}}{{ .Data.data.redis_url }}{{- end }}
+    spec:
+      serviceAccountName: inventory-service-sa
+      containers:
+        - name: inventory-service
+          image: dnahom/inventory-service:latest
+          imagePullPolicy: Always
